@@ -1365,7 +1365,7 @@ const Home = () => {
 
           const response =
             await fetch(
-              '`${import.meta.env.VITE_API_URL}/products?page=1&limit=4`'
+              `${import.meta.env.VITE_API_URL}/products?page=1&limit=4`
             );
 
           const data =
