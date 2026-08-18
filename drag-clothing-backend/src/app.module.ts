@@ -36,7 +36,7 @@ import { PaymentsModule } from './Modules/payments/payments.module';
 
         entities: Object.values(Entities),
 
-        synchronize: false,
+        synchronize: config.get('DB_SYNCHRONIZE') === 'true',
       }),
     }),
 
@@ -55,7 +55,6 @@ import { PaymentsModule } from './Modules/payments/payments.module';
     CartModule,
     CustomersModule,
     PaymentsModule,
-    ClientModule
   ],
 })
 export class AppModule {}
