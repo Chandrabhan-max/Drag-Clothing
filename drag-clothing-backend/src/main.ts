@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { DataSource } from 'typeorm';
+import { seedSuperAdmin } from './seed';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -24,7 +26,7 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://drag-fashion.up.railway.app'],
     credentials: true,
   });
 
@@ -39,6 +41,9 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  const dataSource = app.get(DataSource);
+  await seedSuperAdmin(dataSource);
 
   await app.listen(process.env.PORT ?? 3000);
 }
