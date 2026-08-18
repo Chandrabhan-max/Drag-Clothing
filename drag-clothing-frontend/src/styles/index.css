@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dc-bg: #e0e5ec;
+  --color-dc-text: #2d3748;
+  --color-dc-accent: #ff3e00;
+  --color-dc-grey: #a0aec0;
+  --shadow-skeuo-out: 9px 9px 16px rgba(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
+  --shadow-skeuo-in: inset 6px 6px 10px 0 rgba(163,177,198, 0.7), inset -6px -6px 10px 0 rgba(255,255,255, 0.8);
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-dc-bg); /* Match app background with navbar */
+}

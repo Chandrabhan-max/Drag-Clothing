@@ -1,0 +1,10 @@
+/* App base styles */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1; /* Pushes footer to the bottom */
+}
