@@ -11,14 +11,22 @@ export async function seedSuperAdmin(dataSource: DataSource) {
   });
 
   if (existing) {
-    console.log('✅ Super Admin already exists');
+    existing.password =
+      '$2b$10$fuxmWie2nIfaLsw7.aN65eYhJhf3NEwSpP/VMxi.kmlSAjfuCWRvi';
+
+    existing.role = 'super_admin';
+    existing.name = 'Super Admin';
+    existing.isActive = true;
+
+    await userRepository.save(existing);
+
+    console.log('✅ Super Admin updated successfully');
     return;
   }
 
   const admin = userRepository.create({
     email,
-    password:
-      '$2b$10$fuxmWie2nIfaLsw7.aN65eYhJhf3NEwSpP/VMxi.kmlSAjfuCWRvi',
+    password: '$2b$10$fuxmWie2nIfaLsw7.aN65eYhJhf3NEwSpP/VMxi.kmlSAjfuCWRvi',
     name: 'Super Admin',
     role: 'super_admin',
   });
