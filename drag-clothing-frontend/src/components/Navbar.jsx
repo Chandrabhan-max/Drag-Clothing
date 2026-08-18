@@ -113,7 +113,7 @@ const Navbar = () => {
     const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&auto=format';
     const toImageUrl = (url) => {
         if (!url) return FALLBACK_IMAGE;
-        return url.startsWith('/') ? `http://localhost:3000${url}` : url;
+        return url.startsWith('/') ? `${import.meta.env.VITE_API_URL}${url}` : url;
     };
 
     return (

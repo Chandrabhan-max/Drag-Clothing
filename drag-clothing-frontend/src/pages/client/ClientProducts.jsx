@@ -239,7 +239,7 @@ const ClientProducts = () => {
     }
 
     if (url.startsWith('/')) {
-      return `http://localhost:3000${url}`;
+      return `${import.meta.env.VITE_API_URL}${url}`;
     }
 
     return url;
