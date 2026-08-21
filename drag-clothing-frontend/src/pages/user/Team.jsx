@@ -15,23 +15,24 @@ import {
 
 // --- DATA CONFIGURATION ---
 const teamMembers = [
+
   {
-    id: 3, 
-    name: "Chandrabhan Singh Jhala",
-    role: "Backend Overlord",
-    shortDesc: "Architecting chaos into scalable systems.",
-    bio: "While you're looking at pretty buttons, Chandrabhan is in the trenches fighting race conditions and optimizing schemas. He builds the kind of logic that stays standing when the traffic hits like a freight train. 'It works on my machine' isn't in his vocabulary.",
-    tags: ["System Architect", "Query Optimizer", "Security"],
-    image: "WhatsApp Image 2026-02-18 at 5.12.40 PM.jpeg",
-    icon: <Server className="w-5 h-5" />,
-    audio: "/Highway to Hell.mp3", 
+    id: 2, 
+    name: "Chandrabhan Singh Chouhan",
+    role: "Full-Stack Chameleon",
+    shortDesc: "The bridge between 'looks good' and 'actually works'.",
+    bio: "The Swiss Army knife of the team. One minute he's debugging a complex middleware flow, the next he's tweaking a React hook. He speaks both 'Client' and 'Server' fluently, making sure the two sides don't start a war with each other.",
+    tags: ["Full Stack", "API Ninja", "Node.js"],
+    image: "WhatsApp Image 2026-02-18 at 5.25.30 PM.jpeg",
+    icon: <Layers className="w-5 h-5" />,
+    audio: "/MFgabru.mp3",
     socials: {
-      github: "https://github.com/Jhalachandrabhan",
-      linkedin: "https://www.linkedin.com/in/jhalachandrabhan03/",
-      instagram: "https://www.instagram.com/jhalachandrabhansingh.03/",
-      mail: "mailto:chandrabhansinghjhala03@gmail.com"
+      github: "https://github.com/Chandrabhan-max",
+      linkedin: "https://www.linkedin.com/in/chandrabhan03/",
+      mail: "mailto:cschouhan299@gmail.com"
     }
   },
+
   {
     id: 1,
     name: "Ronit Bhati",
@@ -50,19 +51,20 @@ const teamMembers = [
     }
   },
   {
-    id: 2, 
-    name: "Chandrabhan Singh Chouhan",
-    role: "Full-Stack Chameleon",
-    shortDesc: "The bridge between 'looks good' and 'actually works'.",
-    bio: "The Swiss Army knife of the team. One minute he's debugging a complex middleware flow, the next he's tweaking a React hook. He speaks both 'Client' and 'Server' fluently, making sure the two sides don't start a war with each other.",
-    tags: ["Full Stack", "API Ninja", "Node.js"],
-    image: "WhatsApp Image 2026-02-18 at 5.25.30 PM.jpeg",
-    icon: <Layers className="w-5 h-5" />,
-    audio: "/MFgabru.mp3",
+    id: 3, 
+    name: "Chandrabhan Singh Jhala",
+    role: "Backend Overlord",
+    shortDesc: "Architecting chaos into scalable systems.",
+    bio: "While you're looking at pretty buttons, Chandrabhan is in the trenches fighting race conditions and optimizing schemas. He builds the kind of logic that stays standing when the traffic hits like a freight train. 'It works on my machine' isn't in his vocabulary.",
+    tags: ["System Architect", "Query Optimizer", "Security"],
+    image: "WhatsApp Image 2026-02-18 at 5.12.40 PM.jpeg",
+    icon: <Server className="w-5 h-5" />,
+    audio: "/Highway to Hell.mp3", 
     socials: {
-      github: "https://github.com/Chandrabhan-max",
-      linkedin: "https://www.linkedin.com/in/chandrabhan03/",
-      mail: "mailto:cschouhan299@gmail.com"
+      github: "https://github.com/Jhalachandrabhan",
+      linkedin: "https://www.linkedin.com/in/jhalachandrabhan03/",
+      instagram: "https://www.instagram.com/jhalachandrabhansingh.03/",
+      mail: "mailto:chandrabhansinghjhala03@gmail.com"
     }
   },
   {
