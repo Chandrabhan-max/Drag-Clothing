@@ -16,23 +16,6 @@ import {
 // --- DATA CONFIGURATION ---
 const teamMembers = [
   {
-    id: 1,
-    name: "Ronit Bhati",
-    role: "Frontend Sorcerer",
-    shortDesc: "Turning caffeine into pixel-perfect reality.",
-    bio: "The guy who refuses to accept that 'good enough' is a thing. Ronit lives in the land of 60fps animations and nested components. If a button is 1px off-center, he won't sleep. He’s basically the reason the site doesn't look like it's from 1995.",
-    tags: ["React Wizard", "UI/UX", "Tailwind Junkie"],
-    image: "Ronit.jpg", 
-    icon: <Layout className="w-5 h-5" />,
-    audio: "/badtameez-dil_KNpiYt2m.mp3", 
-    socials: {
-      github: "https://github.com/ronit",
-      linkedin: "www.linkedin.com/in/ronitbhati12",
-      instagram: "https://www.instagram.com/ronitbhati12/",
-      mail: "mailto:bhatironit03@gmail.com"
-    }
-  },
-  {
     id: 3, 
     name: "Chandrabhan Singh Jhala",
     role: "Backend Overlord",
@@ -47,6 +30,23 @@ const teamMembers = [
       linkedin: "https://www.linkedin.com/in/jhalachandrabhan03/",
       instagram: "https://www.instagram.com/jhalachandrabhansingh.03/",
       mail: "mailto:chandrabhansinghjhala03@gmail.com"
+    }
+  },
+  {
+    id: 1,
+    name: "Ronit Bhati",
+    role: "Frontend Sorcerer",
+    shortDesc: "Turning caffeine into pixel-perfect reality.",
+    bio: "The guy who refuses to accept that 'good enough' is a thing. Ronit lives in the land of 60fps animations and nested components. If a button is 1px off-center, he won't sleep. He’s basically the reason the site doesn't look like it's from 1995.",
+    tags: ["React Wizard", "UI/UX", "Tailwind Junkie"],
+    image: "Ronit.jpg", 
+    icon: <Layout className="w-5 h-5" />,
+    audio: "/badtameez-dil_KNpiYt2m.mp3", 
+    socials: {
+      github: "https://github.com/ronit",
+      linkedin: "www.linkedin.com/in/ronitbhati12",
+      instagram: "https://www.instagram.com/ronitbhati12/",
+      mail: "mailto:bhatironit03@gmail.com"
     }
   },
   {
