@@ -75,22 +75,6 @@ const ClientLayout = () => {
     setIsSidebarOpen(false);
   }, [location.pathname]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsSidebarOpen(true);
-      }
-    };
-
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   // Prevent background scrolling while mobile sidebar is open
   useEffect(() => {
     if (isSidebarOpen) {
@@ -129,32 +113,30 @@ const ClientLayout = () => {
 
       <motion.aside
         initial={false}
-        animate={{
-          x: isSidebarOpen ? 0 : '-100%',
-        }}
-        transition={{
-          type: 'spring',
-          stiffness: 300,
-          damping: 30,
-        }}
-        className="
-          fixed
-          md:relative
-          inset-y-0
-          left-0
-          z-50
-          md:z-30
-          w-[280px]
-          md:w-72
-          max-w-[85vw]
-          bg-[#0A0A0A]
-          text-white
-          flex
-          flex-col
-          overflow-hidden
-          shadow-2xl
-          md:shadow-none
-        "
+        className={`
+    fixed
+    md:relative
+    inset-y-0
+    left-0
+    z-50
+    md:z-30
+    w-[280px]
+    md:w-72
+    max-w-[85vw]
+    bg-[#0A0A0A]
+    text-white
+    flex
+    flex-col
+    overflow-hidden
+    shadow-2xl
+    md:shadow-none
+    transform
+    transition-transform
+    duration-300
+    ease-in-out
+    ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+    md:translate-x-0
+  `}
       >
 
         {/* Background Pattern */}
