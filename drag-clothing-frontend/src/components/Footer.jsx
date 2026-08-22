@@ -1,105 +1,491 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Ensure react-router-dom is installed
-import { ArrowUpRight, Instagram, Twitter, Mail } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  Instagram,
+  Twitter,
+  Mail,
+} from 'lucide-react';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+
+    if (!email.trim()) {
+      return;
+    }
+
+    setIsSubscribed(true);
+    setEmail('');
+
+    setTimeout(() => {
+      setIsSubscribed(false);
+    }, 2000);
+  };
+
   return (
-    <footer className="relative bg-[#050505] text-[#EBE9E0] pt-20 pb-6 overflow-hidden">
-      
-      {/* 1. TOP SECTION: NEWSLETTER & CTA */}
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 mb-20">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-10">
-          
-          <div className="max-w-md">
-            <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-[0.9] mb-4">
-              Join the <br/> <span className="text-[#9B4819]">Cult.</span>
+    <footer className="
+      relative
+      overflow-hidden
+      bg-[#050505]
+      pt-20
+      pb-6
+      text-[#EBE9E0]
+    ">
+
+      {/* =====================================================
+          1. NEWSLETTER / CTA
+         ===================================================== */}
+
+      <div className="
+        mx-auto
+        mb-20
+        max-w-[1400px]
+        px-6
+        md:px-10
+      ">
+
+        <div className="
+          flex
+          flex-col
+          items-start
+          gap-10
+          md:flex-row
+          md:items-end
+          md:justify-between
+        ">
+
+          {/* JOIN THE CULT */}
+
+          <div className="
+            w-full
+            max-w-md
+            text-left
+          ">
+
+            <h3 className="
+              mb-4
+              text-left
+              text-3xl
+              font-black
+              uppercase
+              leading-[0.9]
+              tracking-tighter
+              md:text-5xl
+            ">
+              Join the <br />
+              <span className="text-[#9B4819]">
+                Cult.
+              </span>
             </h3>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-50">
+
+            <p className="
+              text-left
+              text-[10px]
+              font-bold
+              uppercase
+              tracking-[0.2em]
+              opacity-50
+            ">
               Exclusive drops, early access, and no spam.
             </p>
+
           </div>
 
-          <div className="w-full md:w-auto flex-1 max-w-lg">
-            <div className="flex items-end gap-4 border-b border-white/20 pb-4 group focus-within:border-[#9B4819] transition-colors duration-500">
-              <input 
-                type="email" 
-                placeholder="ENTER YOUR EMAIL" 
-                className="bg-transparent w-full outline-none text-sm font-bold uppercase tracking-widest placeholder:text-white/20"
+
+          {/* EMAIL / SUBSCRIBE */}
+
+          <form
+            onSubmit={handleSubscribe}
+            className="
+              w-full
+              max-w-lg
+              flex-1
+            "
+          >
+
+            <div className="
+              group
+              flex
+              items-end
+              gap-4
+              border-b
+              border-white/20
+              pb-4
+              transition-colors
+              duration-500
+              focus-within:border-[#9B4819]
+            ">
+
+              <input
+                type="email"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
+                placeholder="ENTER YOUR EMAIL"
+                className="
+                  w-full
+                  bg-transparent
+                  text-sm
+                  font-bold
+                  uppercase
+                  tracking-widest
+                  text-white
+                  outline-none
+                  placeholder:text-white/20
+                "
               />
-              <button className="text-[10px] font-black uppercase tracking-widest hover:text-[#9B4819] transition-colors">
-                Subscribe
+
+              <button
+                type="submit"
+                className={`
+                  shrink-0
+                  text-[10px]
+                  font-black
+                  uppercase
+                  tracking-widest
+                  transition-colors
+                  duration-300
+                  ${isSubscribed
+                    ? 'text-[#9B4819]'
+                    : 'text-white hover:text-[#9B4819]'
+                  }
+                `}
+              >
+                <span className="flex items-center gap-2">
+                  <span>Subscribe</span>
+
+                  {isSubscribed && (
+                    <span className="
+      text-[#9B4819]
+      text-[9px]
+      font-black
+      uppercase
+      tracking-widest
+    ">
+                      Done
+                    </span>
+                  )}
+                </span>
               </button>
+
             </div>
-          </div>
+
+          </form>
 
         </div>
+
       </div>
 
-      {/* 2. GRID LINKS */}
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-2 md:grid-cols-4 gap-10 mb-20 border-t border-white/10 pt-16">
-        
-        {/* Column 1: Brand */}
-        <div className="flex flex-col gap-6">
-          <div className="text-2xl font-black italic tracking-tighter">DRAG.</div>
-          <p className="text-[10px] uppercase tracking-widest opacity-40 leading-relaxed">
-            Engineered in Jaipur.<br/>
-            Worn in the Void.<br/>
+
+      {/* =====================================================
+          2. GRID LINKS
+         ===================================================== */}
+
+      <div className="
+        mx-auto
+        mb-20
+        grid
+        max-w-[1400px]
+        grid-cols-2
+        gap-10
+        border-t
+        border-white/10
+        px-6
+        pb-0
+        pt-16
+        md:grid-cols-4
+        md:px-10
+      ">
+
+        {/* BRAND */}
+
+        <div className="
+          flex
+          flex-col
+          gap-6
+        ">
+
+          <div className="
+            text-2xl
+            font-black
+            italic
+            tracking-tighter
+          ">
+            DRAG.
+          </div>
+
+          <p className="
+            text-[10px]
+            uppercase
+            leading-relaxed
+            tracking-widest
+            opacity-40
+          ">
+            Engineered in Jaipur.
+            <br />
+            Worn in the Void.
+            <br />
             Est. 2026
           </p>
+
         </div>
 
-     
-        {/* Column 3: Company (TEAM SECTION HERE) */}
+
+        {/* EMPTY / SPACING COLUMN */}
+
+        <div />
+
+
+        {/* COMPANY */}
+
         <div>
-          <h4 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#9B4819] mb-6">Company</h4>
-          <ul className="flex flex-col gap-3 text-xs font-medium uppercase tracking-widest opacity-70">
-            <li><Link to="/about" className="hover:text-white hover:pl-2 transition-all duration-300">About</Link></li>
-            
-            {/* --- TEAM LINK --- */}
-            <li className="flex items-center gap-2">
-               <Link to="/team" className="hover:text-white hover:pl-2 transition-all duration-300 flex items-center gap-2">
-                 The Team 
-               </Link>
+
+          <h4 className="
+            mb-6
+            text-[10px]
+            font-bold
+            uppercase
+            tracking-[0.3em]
+            text-[#9B4819]
+          ">
+            Company
+          </h4>
+
+          <ul className="
+            flex
+            flex-col
+            gap-3
+            text-xs
+            font-medium
+            uppercase
+            tracking-widest
+            opacity-70
+          ">
+
+            <li>
+
+              <Link
+                to="/about"
+                className="
+                  transition-all
+                  duration-300
+                  hover:pl-2
+                  hover:text-white
+                "
+              >
+                About
+              </Link>
+
             </li>
-            {/* ----------------- */}
 
-          
-            <li><Link to="/contact" className="hover:text-white hover:pl-2 transition-all duration-300">Contact</Link></li>
+            <li>
+
+              <Link
+                to="/team"
+                className="
+                  flex
+                  items-center
+                  gap-2
+                  transition-all
+                  duration-300
+                  hover:pl-2
+                  hover:text-white
+                "
+              >
+                The Team
+              </Link>
+
+            </li>
+
+            <li>
+
+              <Link
+                to="/contact"
+                className="
+                  transition-all
+                  duration-300
+                  hover:pl-2
+                  hover:text-white
+                "
+              >
+                Contact
+              </Link>
+
+            </li>
+
           </ul>
+
         </div>
 
-        {/* Column 4: Socials */}
+
+        {/* SOCIALS */}
+
         <div>
-          <h4 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#9B4819] mb-6">Connect</h4>
+
+          <h4 className="
+            mb-6
+            text-[10px]
+            font-bold
+            uppercase
+            tracking-[0.3em]
+            text-[#9B4819]
+          ">
+            Connect
+          </h4>
+
           <div className="flex gap-4">
-             <a href="https://www.instagram.com/?hl=en" className="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
-               <Instagram size={16} />
-             </a>
-             <a href="https://x.com/" className="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
-               <Twitter size={16} />
-             </a>
-             <a href="mailto:bhatironit03@gmail.com" className="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
-               <Mail size={16} />
-             </a>
+
+            <a
+              href="https://www.instagram.com/?hl=en"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+              className="
+                flex
+                h-10
+                w-10
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-white/20
+                transition-all
+                duration-500
+                hover:bg-white
+                hover:text-black
+              "
+            >
+              <Instagram size={16} />
+            </a>
+
+            <a
+              href="https://x.com/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Twitter"
+              className="
+                flex
+                h-10
+                w-10
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-white/20
+                transition-all
+                duration-500
+                hover:bg-white
+                hover:text-black
+              "
+            >
+              <Twitter size={16} />
+            </a>
+
+            <a
+              href="mailto:bhatironit03@gmail.com"
+              aria-label="Email"
+              className="
+                flex
+                h-10
+                w-10
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-white/20
+                transition-all
+                duration-500
+                hover:bg-white
+                hover:text-black
+              "
+            >
+              <Mail size={16} />
+            </a>
+
           </div>
+
         </div>
 
       </div>
 
-      {/* 3. BOTTOM WATERMARK & COPYRIGHT */}
-      <div className="relative border-t border-white/10 pt-8 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center text-[9px] uppercase tracking-widest opacity-30">
-        <p>© 2026 Drag Clothing System.</p>
-        <div className="flex gap-6 mt-4 md:mt-0">
-          <Link to="/privacy">Privacy Policy</Link>
-          <Link to="/terms">Terms of Use</Link>
+
+      {/* =====================================================
+          3. COPYRIGHT
+         ===================================================== */}
+
+      <div className="
+        relative
+        flex
+        flex-col
+        items-center
+        justify-between
+        border-t
+        border-white/10
+        px-6
+        pt-8
+        text-[9px]
+        uppercase
+        tracking-widest
+        opacity-30
+        md:flex-row
+        md:px-10
+      ">
+
+        <p>
+          © 2026 Drag Clothing System.
+        </p>
+
+        <div className="
+          mt-4
+          flex
+          gap-6
+          md:mt-0
+        ">
+
+          <Link to="/privacy">
+            Privacy Policy
+          </Link>
+
+          <Link to="/terms">
+            Terms of Use
+          </Link>
+
         </div>
+
       </div>
 
-      {/* GIANT WATERMARK */}
-      <div className="pointer-events-none absolute bottom-[-5%] left-1/2 -translate-x-1/2 w-full text-center overflow-hidden">
-        <h1 className="text-[25vw] font-black uppercase tracking-tighter text-white/[0.02] leading-none select-none">
+
+      {/* =====================================================
+          GIANT WATERMARK
+         ===================================================== */}
+
+      <div className="
+        pointer-events-none
+        absolute
+        bottom-[-5%]
+        left-1/2
+        w-full
+        -translate-x-1/2
+        overflow-hidden
+        text-center
+      ">
+
+        <h1 className="
+          select-none
+          text-[25vw]
+          font-black
+          uppercase
+          leading-none
+          tracking-tighter
+          text-white/[0.02]
+        ">
           DRAG.
         </h1>
+
       </div>
 
     </footer>

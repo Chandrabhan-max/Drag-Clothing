@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Layout, 
-  Server, 
-  Layers, 
-  Code2, 
-  ArrowUpRight, 
-  X, 
-  Github, 
-  Linkedin, 
+import {
+  Layout,
+  Server,
+  Layers,
+  Code2,
+  ArrowUpRight,
+  X,
+  Github,
+  Linkedin,
   Instagram,
   Mail
 } from 'lucide-react';
@@ -17,7 +17,7 @@ import {
 const teamMembers = [
 
   {
-    id: 2, 
+    id: 2,
     name: "Chandrabhan Singh Chouhan",
     role: "Full-Stack Chameleon",
     shortDesc: "The bridge between 'looks good' and 'actually works'.",
@@ -40,9 +40,9 @@ const teamMembers = [
     shortDesc: "Turning caffeine into pixel-perfect reality.",
     bio: "The guy who refuses to accept that 'good enough' is a thing. Ronit lives in the land of 60fps animations and nested components. If a button is 1px off-center, he won't sleep. He’s basically the reason the site doesn't look like it's from 1995.",
     tags: ["React Wizard", "UI/UX", "Tailwind Junkie"],
-    image: "Ronit.jpg", 
+    image: "Ronit.jpg",
     icon: <Layout className="w-5 h-5" />,
-    audio: "/badtameez-dil_KNpiYt2m.mp3", 
+    audio: "/badtameez-dil_KNpiYt2m.mp3",
     socials: {
       github: "https://github.com/ronit",
       linkedin: "www.linkedin.com/in/ronitbhati12",
@@ -51,7 +51,7 @@ const teamMembers = [
     }
   },
   {
-    id: 3, 
+    id: 3,
     name: "Chandrabhan Singh Jhala",
     role: "Backend Overlord",
     shortDesc: "Architecting chaos into scalable systems.",
@@ -59,7 +59,7 @@ const teamMembers = [
     tags: ["System Architect", "Query Optimizer", "Security"],
     image: "WhatsApp Image 2026-02-18 at 5.12.40 PM.jpeg",
     icon: <Server className="w-5 h-5" />,
-    audio: "/Highway to Hell.mp3", 
+    audio: "/Highway to Hell.mp3",
     socials: {
       github: "https://github.com/Jhalachandrabhan",
       linkedin: "https://www.linkedin.com/in/jhalachandrabhan03/",
@@ -102,8 +102,8 @@ const TeamImmersive = () => {
     if (selectedMember && selectedMember.audio) {
       // Public folder access: Simply use the string path
       audioRef.current = new Audio(selectedMember.audio);
-      audioRef.current.volume = 0.4; 
-      
+      audioRef.current.volume = 0.4;
+
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
         playPromise.catch(error => {
@@ -131,12 +131,24 @@ const TeamImmersive = () => {
 
   return (
     <div className="min-h-screen w-full bg-[#F5F5F0] text-[#1A1A1A] font-sans selection:bg-[#E0E0E0] relative">
-      
+
       <div className="w-full max-w-7xl mx-auto px-6 pt-24 pb-12 md:pt-32">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="border-b border-[#1A1A1A]/10 pb-8 mb-12 flex flex-col md:flex-row justify-between items-end gap-6"
+          className="
+  border-b
+  border-[#1A1A1A]/10
+  pb-8
+  mb-12
+  flex
+  flex-col
+  md:flex-row
+  justify-between
+  items-start
+  md:items-end
+  gap-6
+"
         >
           <div>
             <h1 className="text-5xl md:text-7xl font-light tracking-tight mb-2">
@@ -152,13 +164,21 @@ const TeamImmersive = () => {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 h-[600px] md:h-[500px]">
+        <div className="
+  grid
+  grid-cols-1
+  md:grid-cols-2
+  lg:grid-cols-4
+  gap-4
+  h-auto
+  md:h-[500px]
+">
           {teamMembers.map((member, index) => (
-            <ImageCard 
-              key={member.id} 
-              member={member} 
-              index={index} 
-              onClick={() => setSelectedMember(member)} 
+            <ImageCard
+              key={member.id}
+              member={member}
+              index={index}
+              onClick={() => setSelectedMember(member)}
             />
           ))}
         </div>
@@ -171,109 +191,419 @@ const TeamImmersive = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedMember(null)}
-            className="fixed inset-0 z-50 bg-[#1A1A1A]/30 backdrop-blur-sm flex items-center justify-center p-4"
+            className="
+        fixed
+        inset-0
+        z-50
+        bg-[#1A1A1A]/30
+        backdrop-blur-sm
+        flex
+        items-center
+        justify-center
+        p-4
+        overflow-y-auto
+      "
           >
             <motion.div
               layoutId={`card-${selectedMember.id}`}
-              className="bg-white w-full max-w-4xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
+              className="
+  bg-white
+  w-full
+  max-w-4xl
+  max-h-[92vh]
+  overflow-y-auto
+  shadow-2xl
+  flex
+  flex-col
+  md:flex-row
+  items-stretch
+"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="w-full md:w-5/12 h-64 md:h-auto relative">
-                <img 
-                  src={selectedMember.image} 
+
+              {/* ================= IMAGE ================= */}
+
+              <div
+                className="
+    w-full
+    md:w-5/12
+    relative
+    bg-[#F1F1EC]
+    shrink-0
+    md:self-stretch
+  "
+              >
+                <img
+                  src={selectedMember.image}
                   alt={selectedMember.name}
-                  className="w-full h-full object-cover"
+                  className="
+    block
+    w-full
+    h-auto
+    md:h-full
+    object-cover
+    object-top
+  "
                 />
-                <div className="absolute inset-0 bg-black/10" />
-                
-                {/* Playing Indicator (Only shows if audio exists) */}
+                <div className="
+            absolute
+            inset-0
+            pointer-events-none
+            bg-black/10
+          " />
+
+                {/* AUDIO INDICATOR */}
+
                 {selectedMember.audio && (
-                   <div className="absolute bottom-6 right-6 flex gap-1 items-end h-6">
-                      <motion.div 
-                        animate={{ height: [6, 24, 6] }} 
-                        transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }} 
-                        className="w-1.5 bg-white/90 rounded-full" 
-                      />
-                      <motion.div 
-                        animate={{ height: [6, 36, 6] }} 
-                        transition={{ repeat: Infinity, duration: 1.1, ease: "linear", delay: 0.2 }} 
-                        className="w-1.5 bg-white/90 rounded-full" 
-                      />
-                      <motion.div 
-                        animate={{ height: [6, 18, 6] }} 
-                        transition={{ repeat: Infinity, duration: 0.9, ease: "linear", delay: 0.4 }} 
-                        className="w-1.5 bg-white/90 rounded-full" 
-                      />
-                   </div>
+                  <div className="
+              absolute
+              bottom-6
+              right-6
+              flex
+              gap-1
+              items-end
+              h-6
+            ">
+
+                    <motion.div
+                      animate={{
+                        height: [6, 24, 6],
+                      }}
+                      transition={{
+                        repeat: Infinity,
+                        duration: 0.8,
+                        ease: 'linear',
+                      }}
+                      className="
+                  w-1.5
+                  bg-white/90
+                  rounded-full
+                "
+                    />
+
+                    <motion.div
+                      animate={{
+                        height: [6, 36, 6],
+                      }}
+                      transition={{
+                        repeat: Infinity,
+                        duration: 1.1,
+                        ease: 'linear',
+                        delay: 0.2,
+                      }}
+                      className="
+                  w-1.5
+                  bg-white/90
+                  rounded-full
+                "
+                    />
+
+                    <motion.div
+                      animate={{
+                        height: [6, 18, 6],
+                      }}
+                      transition={{
+                        repeat: Infinity,
+                        duration: 0.9,
+                        ease: 'linear',
+                        delay: 0.4,
+                      }}
+                      className="
+                  w-1.5
+                  bg-white/90
+                  rounded-full
+                "
+                    />
+
+                  </div>
                 )}
+
               </div>
 
-              <div className="w-full md:w-7/12 p-8 md:p-12 relative overflow-y-auto">
-                <button 
-                  onClick={() => setSelectedMember(null)}
-                  className="absolute top-6 right-6 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+
+              {/* ================= CONTENT ================= */}
+
+              <div className="
+          w-full
+          md:w-7/12
+          shrink-0
+          p-8
+          md:p-12
+          relative
+        ">
+
+                {/* CLOSE BUTTON */}
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setSelectedMember(null)
+                  }
+                  className="
+              absolute
+              top-6
+              right-6
+              p-2
+              rounded-full
+              bg-gray-100
+              hover:bg-gray-200
+              transition-colors
+            "
+                  aria-label="Close profile"
                 >
-                  <X className="w-5 h-5 text-gray-600" />
+                  <X className="
+              w-5
+              h-5
+              text-gray-600
+            " />
                 </button>
 
-                <div className="flex items-center gap-2 mb-4 text-[#FF4D00] text-xs font-bold uppercase tracking-widest">
-                   {selectedMember.icon}
-                   <span>{selectedMember.role}</span>
+
+                {/* ROLE */}
+
+                <div className="
+            flex
+            items-center
+            gap-2
+            mb-4
+            text-[#FF4D00]
+            text-xs
+            font-bold
+            uppercase
+            tracking-widest
+          ">
+                  {selectedMember.icon}
+
+                  <span>
+                    {selectedMember.role}
+                  </span>
                 </div>
-                
-                <h2 className="text-4xl font-medium tracking-tight mb-6 text-gray-900">
+
+
+                {/* NAME */}
+
+                <h2 className="
+            text-4xl
+            font-medium
+            tracking-tight
+            mb-6
+            text-gray-900
+            pr-10
+          ">
                   {selectedMember.name}
                 </h2>
 
-                <p className="text-gray-600 text-lg leading-relaxed mb-8">
+
+                {/* BIO */}
+
+                <p className="
+            text-gray-600
+            text-lg
+            leading-relaxed
+            mb-8
+          ">
                   {selectedMember.bio}
                 </p>
 
+
+                {/* TECH STACK */}
+
                 <div className="mb-8">
-                  <span className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
+
+                  <span className="
+              block
+              text-xs
+              font-bold
+              uppercase
+              tracking-widest
+              text-gray-400
+              mb-3
+            ">
                     Tech Stack
                   </span>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedMember.tags.map(tag => (
-                      <span key={tag} className="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-medium uppercase tracking-wider rounded-sm">
-                        {tag}
-                      </span>
-                    ))}
+
+                  <div className="
+              flex
+              flex-wrap
+              gap-2
+            ">
+
+                    {selectedMember.tags.map(
+                      (tag) => (
+                        <span
+                          key={tag}
+                          className="
+                      px-3
+                      py-1
+                      bg-gray-100
+                      text-gray-600
+                      text-xs
+                      font-medium
+                      uppercase
+                      tracking-wider
+                      rounded-sm
+                    "
+                        >
+                          {tag}
+                        </span>
+                      )
+                    )}
+
                   </div>
+
                 </div>
 
-                <div className="flex gap-6 pt-6 border-t border-gray-100">
+
+                {/* SOCIALS */}
+
+                <div className="
+            flex
+            flex-wrap
+            gap-6
+            pt-6
+            border-t
+            border-gray-100
+          ">
+
                   {selectedMember.socials.github && (
-                    <a href={selectedMember.socials.github} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-gray-400 hover:text-black transition-colors">
+                    <a
+                      href={
+                        selectedMember.socials.github
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="
+                  group
+                  flex
+                  items-center
+                  gap-2
+                  text-gray-400
+                  hover:text-black
+                  transition-colors
+                "
+                    >
                       <Github className="w-5 h-5" />
-                      <span className="text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity -ml-2 group-hover:ml-0">Github</span>
+
+                      <span className="
+                  text-[10px]
+                  font-bold
+                  uppercase
+                  tracking-widest
+                  opacity-0
+                  group-hover:opacity-100
+                  transition-opacity
+                ">
+                        Github
+                      </span>
                     </a>
                   )}
+
                   {selectedMember.socials.linkedin && (
-                    <a href={selectedMember.socials.linkedin} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-gray-400 hover:text-[#0077b5] transition-colors">
+                    <a
+                      href={
+                        selectedMember.socials.linkedin
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="
+                  group
+                  flex
+                  items-center
+                  gap-2
+                  text-gray-400
+                  hover:text-[#0077b5]
+                  transition-colors
+                "
+                    >
                       <Linkedin className="w-5 h-5" />
-                      <span className="text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity -ml-2 group-hover:ml-0">LinkedIn</span>
+
+                      <span className="
+                  text-[10px]
+                  font-bold
+                  uppercase
+                  tracking-widest
+                  opacity-0
+                  group-hover:opacity-100
+                  transition-opacity
+                ">
+                        LinkedIn
+                      </span>
                     </a>
                   )}
+
                   {selectedMember.socials.instagram && (
-                    <a href={selectedMember.socials.instagram} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-gray-400 hover:text-[#E1306C] transition-colors">
+                    <a
+                      href={
+                        selectedMember.socials.instagram
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="
+                  group
+                  flex
+                  items-center
+                  gap-2
+                  text-gray-400
+                  hover:text-[#E1306C]
+                  transition-colors
+                "
+                    >
                       <Instagram className="w-5 h-5" />
-                      <span className="text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity -ml-2 group-hover:ml-0">Instagram</span>
+
+                      <span className="
+                  text-[10px]
+                  font-bold
+                  uppercase
+                  tracking-widest
+                  opacity-0
+                  group-hover:opacity-100
+                  transition-opacity
+                ">
+                        Instagram
+                      </span>
                     </a>
                   )}
+
                   {selectedMember.socials.mail && (
-                    <a href={selectedMember.socials.mail} className="group flex items-center gap-2 text-gray-400 hover:text-[#EA4335] transition-colors">
+                    <a
+                      href={
+                        selectedMember.socials.mail
+                      }
+                      className="
+                  group
+                  flex
+                  items-center
+                  gap-2
+                  text-gray-400
+                  hover:text-[#EA4335]
+                  transition-colors
+                "
+                    >
                       <Mail className="w-5 h-5" />
-                      <span className="text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity -ml-2 group-hover:ml-0">Email</span>
+
+                      <span className="
+                  text-[10px]
+                  font-bold
+                  uppercase
+                  tracking-widest
+                  opacity-0
+                  group-hover:opacity-100
+                  transition-opacity
+                ">
+                        Email
+                      </span>
                     </a>
                   )}
+
                 </div>
+
               </div>
+
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </div >
   );
 };
 
@@ -285,12 +615,37 @@ const ImageCard = ({ member, index, onClick }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
       onClick={onClick}
-      className="group relative w-full h-full overflow-hidden cursor-pointer rounded-sm"
+      className="
+  group
+  relative
+  w-full
+  h-[420px]
+  sm:h-[500px]
+  md:h-full
+  overflow-hidden
+  cursor-pointer
+  rounded-sm
+"
     >
-      <img 
-        src={member.image} 
+      <img
+        src={member.image}
         alt={member.name}
-        className="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out grayscale group-hover:grayscale-0 group-hover:scale-105"
+        className="
+    absolute
+    inset-0
+    w-full
+    h-full
+    object-cover
+    md:object-cover
+    object-[center_20%]
+    md:object-center
+    transition-all
+    duration-700
+    ease-in-out
+    grayscale
+    group-hover:grayscale-0
+    group-hover:scale-105
+  "
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
       <div className="absolute top-4 left-4 z-10">

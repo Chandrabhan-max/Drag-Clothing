@@ -420,40 +420,40 @@ const CheckoutPayment = () => {
                     // FAIL PAYMENT
                     // =============================================
 
-                    const failPayment =
-                        async (message) => {
+                    const failPayment = async (message) => {
+                        if (settled) {
+                            return;
+                        }
 
-                            if (settled) {
-                                return;
-                            }
+                        settled = true;
 
-
-                            settled = true;
-
-
-                            try {
-
-                                await orderService.cancelOrder(
-                                    newOrderId
-                                );
-
-                            } catch (cancelError) {
-
-                                console.error(
-                                    'Failed to cancel failed-payment order:',
-                                    cancelError?.response?.data ||
-                                    cancelError
-                                );
-
-                            }
-
-
-                            reject(
-                                new Error(message)
+                        try {
+                            // 1. Cancel the pending order
+                            await orderService.cancelOrder(newOrderId);
+                        } catch (cancelError) {
+                            console.error(
+                                'Failed to cancel failed-payment order:',
+                                cancelError?.response?.data ||
+                                cancelError
                             );
+                        }
 
-                        };
+                        try {
+                            // 2. Clear cart from backend + frontend
+                            await clearCart();
+                        } catch (cartError) {
+                            console.error(
+                                'Failed to clear cart after cancelled payment:',
+                                cartError
+                            );
+                        }
 
+                        // 3. Now return to home
+                        navigate('/');
+
+                        // 4. Reject payment promise
+                        reject(new Error(message));
+                    };
 
                     // =============================================
                     // RAZORPAY INSTANCE
@@ -528,7 +528,7 @@ const CheckoutPayment = () => {
 
 
                                     } catch (
-                                        verifyError
+                                    verifyError
                                     ) {
 
                                         await failPayment(
@@ -845,11 +845,10 @@ const CheckoutPayment = () => {
                                             method.id
                                         )
                                     }
-                                    className={`relative pb-3 px-3 flex items-center gap-2 transition-colors ${
-                                        selectedMethod === method.id
-                                            ? 'text-[#1A1A1A]'
-                                            : 'text-gray-400 hover:text-gray-600'
-                                    }`}
+                                    className={`relative pb-3 px-3 flex items-center gap-2 transition-colors ${selectedMethod === method.id
+                                        ? 'text-[#1A1A1A]'
+                                        : 'text-gray-400 hover:text-gray-600'
+                                        }`}
                                 >
 
                                     <method.icon
@@ -1485,11 +1484,10 @@ const CheckoutPayment = () => {
                                     {/* NORMAL */}
 
                                     <span
-                                        className={`absolute transition-transform duration-500 flex items-center gap-2 ${
-                                            isProcessing
-                                                ? '-translate-y-10'
-                                                : 'translate-y-0'
-                                        }`}
+                                        className={`absolute transition-transform duration-500 flex items-center gap-2 ${isProcessing
+                                            ? '-translate-y-10'
+                                            : 'translate-y-0'
+                                            }`}
                                     >
 
                                         Confirm Order
@@ -1504,11 +1502,10 @@ const CheckoutPayment = () => {
                                     {/* PROCESSING */}
 
                                     <span
-                                        className={`absolute transition-transform duration-500 flex items-center gap-2 ${
-                                            isProcessing
-                                                ? 'translate-y-0'
-                                                : 'translate-y-10'
-                                        }`}
+                                        className={`absolute transition-transform duration-500 flex items-center gap-2 ${isProcessing
+                                            ? 'translate-y-0'
+                                            : 'translate-y-10'
+                                            }`}
                                     >
 
                                         <Loader2

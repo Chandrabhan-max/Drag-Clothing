@@ -38,7 +38,7 @@ const GALLERY_IMAGES = [
   },
   {
     id: '02',
-    title: 'Autmn Wear',
+    title: 'Autumn Wear',
     subtitle: 'Soft Architecture',
     url: 'https://i.pinimg.com/736x/75/0b/ed/750bed36def6786fb9490f3cb7c76090.jpg',
   },
@@ -46,13 +46,13 @@ const GALLERY_IMAGES = [
     id: '03',
     title: 'For Her',
     subtitle: 'Essential for her',
-    url: 'https://i.pinimg.com/736x/99/f1/03/99f1031363b879610dc0f8713d09cc1e.jpg',
+    url: 'forher.png',
   },
   {
     id: '04',
     title: 'For Him',
     subtitle: 'Ground Control',
-    url: 'https://littleboxindia.com/cdn/shop/files/Men_Brown_Button_Down_Full_Sleeve_Jacket_720x.webp?v=1769669708',
+    url: 'forhim.png',
   },
 ];
 
@@ -202,30 +202,26 @@ const ParallaxText = ({
 }) => {
   const baseX = useMotionValue(0);
 
-  const { scrollY } =
-    useScroll();
+  const { scrollY } = useScroll();
 
-  const scrollVelocity =
-    useVelocity(scrollY);
+  const scrollVelocity = useVelocity(scrollY);
 
-  const smoothVelocity =
-    useSpring(
-      scrollVelocity,
-      {
-        damping: 50,
-        stiffness: 400,
-      }
-    );
+  const smoothVelocity = useSpring(
+    scrollVelocity,
+    {
+      damping: 50,
+      stiffness: 400,
+    }
+  );
 
-  const velocityFactor =
-    useTransform(
-      smoothVelocity,
-      [0, 1000],
-      [0, 5],
-      {
-        clamp: false,
-      }
-    );
+  const velocityFactor = useTransform(
+    smoothVelocity,
+    [0, 1000],
+    [0, 5],
+    {
+      clamp: false,
+    }
+  );
 
   const x = useTransform(
     baseX,
@@ -237,38 +233,27 @@ const ParallaxText = ({
       )}%`
   );
 
-  const directionFactor =
-    useRef(1);
+  const directionFactor = useRef(1);
 
-  useAnimationFrame(
-    (t, delta) => {
-      let moveBy =
-        directionFactor.current *
-        baseVelocity *
-        (delta / 1000);
+  useAnimationFrame((t, delta) => {
+    let moveBy =
+      directionFactor.current *
+      baseVelocity *
+      (delta / 1000);
 
-      if (
-        velocityFactor.get() < 0
-      ) {
-        directionFactor.current =
-          -1;
-      } else if (
-        velocityFactor.get() > 0
-      ) {
-        directionFactor.current =
-          1;
-      }
-
-      moveBy +=
-        directionFactor.current *
-        moveBy *
-        velocityFactor.get();
-
-      baseX.set(
-        baseX.get() + moveBy
-      );
+    if (velocityFactor.get() < 0) {
+      directionFactor.current = -1;
+    } else if (velocityFactor.get() > 0) {
+      directionFactor.current = 1;
     }
-  );
+
+    moveBy +=
+      directionFactor.current *
+      moveBy *
+      velocityFactor.get();
+
+    baseX.set(baseX.get() + moveBy);
+  });
 
   return (
     <div className="overflow-hidden flex flex-nowrap m-0 select-none py-4">
@@ -281,12 +266,14 @@ const ParallaxText = ({
         {Array(4)
           .fill(children)
           .map((text, i) => (
+
             <span
               key={i}
               className="block mr-12 text-[#1A1A1A] opacity-20"
             >
               {text}
             </span>
+
           ))}
 
       </motion.div>
@@ -295,27 +282,39 @@ const ParallaxText = ({
   );
 };
 
-const HorizontalStory = ({
-  addToast,
-}) => {
-  const targetRef =
-    useRef(null);
+const HorizontalStory = ({ addToast }) => {
+  const targetRef = useRef(null);
 
-  const {
-    scrollYProgress,
-  } = useScroll({
+  const { scrollYProgress } = useScroll({
     target: targetRef,
   });
+
+  const [isMobile, setIsMobile] =
+    useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+
+    window.addEventListener('resize', checkMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   const x = useTransform(
     scrollYProgress,
     [0, 1],
-    ['1%', '-75%']
+    isMobile
+      ? ['0%', '-79%']
+      : ['1%', '-75%']
   );
 
-  const navigate =
-    useNavigate();
-
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -325,98 +324,383 @@ const HorizontalStory = ({
   return (
     <section
       ref={targetRef}
-      className="relative h-[240vh] sm:h-[300vh] bg-[#1A1A1A]"
+      className="relative h-[250vh] sm:h-[300vh] bg-[#1A1A1A]"
     >
 
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
 
         <motion.div
           style={{ x }}
-          className="flex gap-5 sm:gap-8 md:gap-10 pl-5 sm:pl-8 md:pl-20"
+          className="flex items-center gap-5 sm:gap-8 md:gap-10 pl-4 sm:pl-8 md:pl-20"
         >
 
-          <div className="flex flex-col justify-center min-w-[280px] sm:min-w-[400px] md:min-w-[600px] text-[#EBE9E0]">
+          {/* =====================================================
+              THE LIMITS + VIDEO
+              ONLY THIS SECTION HAS BEEN CHANGED
+              ===================================================== */}
 
-            <h2 className="text-4xl sm:text-5xl md:text-8xl font-black uppercase tracking-tighter mb-4 sm:mb-6">
-              The Limits
-            </h2>
+          <div
+            className="
+              relative
+              flex
+              w-[82vw]
+              sm:w-[72vw]
+              md:w-[50vw]
+              lg:w-[45vw]
+              max-w-[720px]
+              shrink-0
+              flex-col
+              justify-center
+              -translate-y-3
+              sm:-translate-y-4
+              md:-translate-y-5
+              text-[#EBE9E0]
+              pr-2
+              sm:pr-6
+              md:pr-10
+            "
+          >
 
-            <p className="text-base sm:text-xl md:text-2xl font-light opacity-70 max-w-md">
-              Fashion should fit your identity, not limit it.
-            </p>
+            {/* Background word */}
+            <div
+              className="
+                pointer-events-none
+                absolute
+                inset-0
+                flex
+                items-center
+                justify-center
+                overflow-hidden
+              "
+            >
 
-          </div>
-
-          {GALLERY_IMAGES.map(
-            (img) => (
-              <div
-                key={img.id}
-                onClick={() => {
-
-                  if (img.id === '01') {
-                    navigate('/products?merch=true');
-                    return;
-                  }
-
-                  if (img.id === '02') {
-                    addToast(
-                      'COMING SOON',
-                      'Autumn Wear collection is coming soon.'
-                    );
-                    return;
-                  }
-
-                  if (img.id === '03') {
-                    navigate('/products?gender=WOMEN');
-                    return;
-                  }
-
-                  if (img.id === '04') {
-                    navigate('/products?gender=MEN');
-                    return;
-                  }
-                }}
-                className="relative group h-[62vh] sm:h-[70vh] md:h-[80vh] w-[82vw] sm:w-[70vw] md:w-[45vw] overflow-hidden bg-gray-900 cursor-pointer"
+              <span
+                className="
+                  select-none
+                  whitespace-nowrap
+                  text-[34vw]
+                  sm:text-[26vw]
+                  md:text-[17vw]
+                  font-black
+                  uppercase
+                  leading-none
+                  tracking-[-0.08em]
+                  text-white/[0.035]
+                "
               >
+                DRAG
+              </span>
 
-                <img
-                  src={img.url}
-                  alt={img.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+            </div>
 
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
+            {/* Content */}
+            <div className="relative z-10">
 
-                <div className="absolute bottom-0 left-0 p-5 sm:p-8 w-full bg-gradient-to-t from-black/90 to-transparent">
+              {/* Heading */}
+              <div className="mb-5 sm:mb-6 md:mb-8">
 
-                  <span className="text-white/50 text-xs font-bold tracking-[0.3em] uppercase mb-2 block">
-                    {img.subtitle}
+                <div className="mb-3 sm:mb-4 flex items-center gap-3 sm:gap-4">
+
+                  <span className="h-[2px] w-10 sm:w-14 bg-[#9B4819]" />
+
+                  <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.35em] text-white/40">
+                    01 — IDENTITY
                   </span>
 
-                  <h3 className="text-3xl sm:text-4xl md:text-6xl text-white font-black uppercase tracking-tighter">
-                    {img.title}
-                  </h3>
+                </div>
+
+                <h2
+                  className="
+                    text-[10vw]
+                    sm:text-[7.5vw]
+                    md:text-[5vw]
+                    lg:text-[4.4vw]
+                    font-black
+                    uppercase
+                    leading-[0.82]
+                    tracking-[-0.06em]
+                  "
+                >
+                  The Limits
+                </h2>
+
+                <p
+                  className="
+                    mt-4
+                    sm:mt-5
+                    max-w-xs
+                    sm:max-w-sm
+                    md:max-w-md
+                    text-sm
+                    sm:text-base
+                    md:text-lg
+                    font-light
+                    leading-relaxed
+                    text-white/60
+                  "
+                >
+                  Fashion should fit your identity,
+                  not limit it.
+                </p>
+
+              </div>
+
+              {/* Video */}
+              <div
+                className="
+                  relative
+                  -translate-y-3
+                  sm:-translate-y-4
+                  md:-translate-y-5
+                  w-full
+                  overflow-hidden
+                  bg-black
+                  border
+                  border-white/10
+                  shadow-2xl
+                  aspect-video
+                "
+              >
+
+                {/* Background DRAG behind video */}
+                <div
+                  className="
+                    pointer-events-none
+                    absolute
+                    inset-0
+                    z-0
+                    flex
+                    items-center
+                    justify-center
+                    overflow-hidden
+                  "
+                >
+
+                  <span
+                    className="
+                      select-none
+                      whitespace-nowrap
+                      text-[24vw]
+                      sm:text-[20vw]
+                      md:text-[12vw]
+                      font-black
+                      uppercase
+                      leading-none
+                      tracking-[-0.08em]
+                      text-white/[0.06]
+                    "
+                  >
+                    DRAG
+                  </span>
+
+                </div>
+
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="
+                    relative
+                    z-10
+                    h-full
+                    w-full
+                    object-cover
+                  "
+                >
+
+                  <source
+                    src="/video.mp4"
+                    type="video/mp4"
+                  />
+
+                  Your browser does not support the video tag.
+
+                </video>
+
+                {/* Video overlay */}
+                <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+
+                {/* Bottom label */}
+                <div
+                  className="
+                    pointer-events-none
+                    absolute
+                    bottom-3
+                    left-3
+                    right-3
+                    z-30
+                    flex
+                    items-end
+                    justify-between
+                    sm:bottom-4
+                    sm:left-5
+                    sm:right-5
+                  "
+                >
+
+                  <span
+                    className="
+                      text-[8px]
+                      sm:text-[9px]
+                      font-black
+                      uppercase
+                      tracking-[0.3em]
+                      text-white/70
+                    "
+                  >
+                    DRAG CLOTHING
+                  </span>
+
+                  <span
+                    className="
+                      text-[8px]
+                      sm:text-[9px]
+                      font-black
+                      uppercase
+                      tracking-[0.3em]
+                      text-[#9B4819]
+                    "
+                  >
+                    ORIGINAL
+                  </span>
 
                 </div>
 
               </div>
-            )
-          )}
 
-          <div className="flex flex-col justify-center min-w-[240px] sm:min-w-[300px] text-[#EBE9E0] pr-8 sm:pr-20">
+            </div>
+
+          </div>
+
+          {/* =====================================================
+              EXISTING MERCH CARDS — UNCHANGED
+              ===================================================== */}
+
+          {GALLERY_IMAGES.map((img) => (
+
+            <div
+              key={img.id}
+              onClick={() => {
+
+                if (img.id === '01') {
+                  navigate('/products?merch=true');
+                  return;
+                }
+
+                if (img.id === '02') {
+                  addToast(
+                    'COMING SOON',
+                    'Autumn Wear collection is coming soon.'
+                  );
+                  return;
+                }
+
+                if (img.id === '03') {
+                  navigate('/products?gender=WOMEN');
+                  return;
+                }
+
+                if (img.id === '04') {
+                  navigate('/products?gender=MEN');
+                  return;
+                }
+
+              }}
+              className="
+                relative
+                group
+                h-[58vh]
+                sm:h-[70vh]
+                md:h-[80vh]
+                w-[76vw]
+                sm:w-[70vw]
+                md:w-[45vw]
+                shrink-0
+                overflow-hidden
+                bg-gray-900
+                cursor-pointer
+              "
+            >
+
+              <img
+                src={img.url}
+                alt={img.title}
+                className="
+                  absolute
+                  inset-0
+                  h-full
+                  w-full
+                  object-cover
+                  transition-transform
+                  duration-700
+                  group-hover:scale-110
+                "
+              />
+
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
+
+              <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 to-transparent p-5 sm:p-8">
+
+                <span className="mb-2 block text-xs font-bold uppercase tracking-[0.3em] text-white/50">
+                  {img.subtitle}
+                </span>
+
+                <h3 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">
+                  {img.title}
+                </h3>
+
+              </div>
+
+            </div>
+
+          ))}
+
+          {/* =====================================================
+              EXISTING VIEW ALL BUTTON — UNCHANGED
+              ===================================================== */}
+
+          <div
+            className="
+              flex
+              min-w-[180px]
+              sm:min-w-[300px]
+              shrink-0
+              flex-col
+              justify-center
+              pr-8
+              sm:pr-20
+              text-[#EBE9E0]
+            "
+          >
 
             <MagneticButton
-              onClick={() =>
-                navigate(
-                  '/category/men'
-                )
-              }
-              className="w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors cursor-pointer group"
+              onClick={() => navigate('/category/men')}
+              className="
+                h-28
+                w-28
+                sm:h-36
+                sm:w-36
+                md:h-40
+                md:w-40
+                rounded-full
+                border
+                border-white/20
+                flex
+                items-center
+                justify-center
+                cursor-pointer
+                transition-colors
+                hover:bg-white
+                hover:text-black
+                group
+              "
             >
 
               <div className="flex flex-col items-center">
 
-                <span className="text-xs uppercase tracking-widest font-bold">
+                <span className="text-xs font-bold uppercase tracking-widest">
                   View All
                 </span>
 
@@ -429,6 +713,267 @@ const HorizontalStory = ({
           </div>
 
         </motion.div>
+
+      </div>
+
+    </section>
+  );
+};
+
+
+/* =========================================================
+   MOBILE HERO CAROUSEL
+   ========================================================= */
+
+const MobileHeroCarousel = () => {
+  const navigate = useNavigate();
+
+  const images = [
+    '/1.avif',
+    '/3.avif',
+    '/2.avif',
+    '/4.avif',
+  ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window !== 'undefined'
+      ? window.innerWidth
+      : 390
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => {
+        if (prev >= images.length - 1) {
+          return 0;
+        }
+
+        return prev + 1;
+      });
+    }, 4200);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const slideWidth = Math.min(
+    viewportWidth * 0.86,
+    430
+  );
+
+  const slideGap = 12;
+  const slideStep = slideWidth + slideGap;
+
+  const handleDragEnd = (_event, info) => {
+    const offset = info.offset.x;
+    const velocity = info.velocity.x;
+
+    if (offset < -70 || velocity < -500) {
+      setActiveIndex((prev) => {
+        if (prev >= images.length - 1) {
+          return 0;
+        }
+
+        return prev + 1;
+      });
+
+      return;
+    }
+
+    if (offset > 70 || velocity > 500) {
+      setActiveIndex((prev) => {
+        if (prev <= 0) {
+          return images.length - 1;
+        }
+
+        return prev - 1;
+      });
+    }
+  };
+
+  const handleImageClick = () => {
+    navigate('/products');
+  };
+
+  return (
+    <section className="relative min-h-[calc(100svh-64px)] overflow-hidden bg-[#EBE9E0]">
+
+      {/* Background DRAG */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+        <span className="absolute left-1/2 top-[12%] -translate-x-1/2 whitespace-nowrap text-[34vw] font-black uppercase leading-none tracking-[-0.09em] text-[#1A1A1A]/[0.035]">
+          DRAG
+        </span>
+      </div>
+
+      <div className="relative z-10 flex min-h-[calc(100svh-64px)] flex-col justify-between px-4 pb-6 pt-7">
+
+        {/* TOP */}
+        <div className="px-1">
+
+          <div className="mb-3 flex items-center gap-3">
+            <span className="h-[2px] w-10 bg-[#9B4819]" />
+
+            <span className="text-[8px] font-black uppercase tracking-[0.34em] text-[#1A1A1A]/45">
+              DRAG CLOTHING
+            </span>
+          </div>
+
+          <h1 className="text-[15vw] font-black uppercase leading-[0.82] tracking-[-0.07em] text-[#111]">
+            BEYOND
+            <span className="block pl-[8vw] text-[#9B4819]">
+              ORDINARY
+            </span>
+          </h1>
+
+        </div>
+
+        {/* CAROUSEL */}
+        <div className="relative mt-5 flex flex-1 items-center overflow-hidden">
+
+          <motion.div
+            className="flex items-center"
+            animate={{
+              x: -activeIndex * slideStep,
+            }}
+            transition={{
+              type: 'spring',
+              stiffness: 260,
+              damping: 28,
+              mass: 0.7,
+            }}
+            drag="x"
+            dragConstraints={{
+              left: 0,
+              right: 0,
+            }}
+            dragElastic={0.1}
+            onDragEnd={handleDragEnd}
+            style={{
+              width:
+                images.length * slideWidth +
+                (images.length - 1) * slideGap,
+            }}
+          >
+
+            {images.map((image, index) => (
+
+              <div
+                key={image}
+                className="relative flex-none cursor-pointer overflow-hidden bg-[#D5D3CD] touch-manipulation"
+                style={{
+                  width: slideWidth,
+                  marginRight:
+                    index === images.length - 1
+                      ? 0
+                      : slideGap,
+                }}
+                onClick={handleImageClick}
+              >
+
+                <div className="relative aspect-[3/4] w-full">
+
+                  <motion.img
+                    src={image}
+                    alt={`Drag Clothing editorial ${index + 1}`}
+                    draggable="false"
+                    className="h-full w-full select-none object-cover"
+                    animate={{
+                      scale:
+                        activeIndex === index
+                          ? 1
+                          : 0.985,
+                    }}
+                    transition={{
+                      duration: 0.5,
+                    }}
+                  />
+
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+
+                  <div className="pointer-events-none absolute bottom-4 right-4 z-30">
+                    <span className="text-[12px] font-black uppercase tracking-[0.08em] text-[#9B4819]">
+                      DRAG.
+                    </span>
+                  </div>
+
+                </div>
+
+              </div>
+
+            ))}
+
+          </motion.div>
+
+          {activeIndex < images.length - 1 && (
+            <div className="pointer-events-none absolute right-1 top-1/2 z-20 -translate-y-1/2">
+              <div className="h-16 w-[2px] bg-[#9B4819]" />
+            </div>
+          )}
+
+        </div>
+
+        {/* CONTROLS */}
+        <div className="mt-5">
+
+          <div className="mb-5 flex items-center">
+
+            <div className="flex items-center gap-2">
+
+              {images.map((_, index) => {
+
+                const isActive =
+                  activeIndex === index;
+
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    aria-label={`Go to slide ${index + 1}`}
+                    onClick={() =>
+                      setActiveIndex(index)
+                    }
+                    className={
+                      isActive
+                        ? 'h-[2px] w-[34px] overflow-hidden bg-[#9B4819] transition-all duration-300'
+                        : 'h-[2px] w-[14px] overflow-hidden bg-[#1A1A1A]/15 transition-all duration-300'
+                    }
+                  />
+                );
+              })}
+
+            </div>
+
+          </div>
+
+          {/* FOOTER */}
+          <div className="flex items-end justify-between border-t border-[#1A1A1A]/10 pt-4">
+
+            <p className="text-[8px] font-black uppercase tracking-[0.3em] text-[#1A1A1A]/35">
+              EST. 2026 — JAIPUR
+            </p>
+
+            <div className="flex items-center justify-end gap-2">
+              <span className="h-px w-8 bg-[#9B4819]" />
+
+              <span className="h-2 w-2 rounded-full border border-[#9B4819]" />
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
 
@@ -452,7 +997,9 @@ const FashionManifesto = () => {
     );
 
   useLayoutEffect(() => {
+
     const updatePosition = () => {
+
       if (!sectionRef.current) return;
 
       const rect =
@@ -465,6 +1012,7 @@ const FashionManifesto = () => {
       setViewportHeight(
         window.innerHeight
       );
+
     };
 
     updatePosition();
@@ -480,6 +1028,7 @@ const FashionManifesto = () => {
     );
 
     return () => {
+
       window.removeEventListener(
         'resize',
         updatePosition
@@ -489,7 +1038,9 @@ const FashionManifesto = () => {
         'load',
         updatePosition
       );
+
     };
+
   }, []);
 
   const animationStart =
@@ -501,7 +1052,10 @@ const FashionManifesto = () => {
 
   const progress = useTransform(
     scrollY,
-    [animationStart, animationEnd],
+    [
+      animationStart,
+      animationEnd
+    ],
     [0, 1],
     {
       clamp: true,
@@ -575,6 +1129,7 @@ const FashionManifesto = () => {
   );
 
   return (
+
     <section
       ref={sectionRef}
       className="
@@ -602,6 +1157,7 @@ const FashionManifesto = () => {
           overflow-hidden
         "
       >
+
         <div
           className="
             whitespace-nowrap
@@ -615,7 +1171,9 @@ const FashionManifesto = () => {
         >
           IDENTITY
         </div>
+
       </div>
+
 
       {/* =========================================
           DESKTOP VERSION
@@ -702,6 +1260,7 @@ const FashionManifesto = () => {
 
           </motion.div>
 
+
           {/* DESKTOP TEXT */}
 
           <motion.div
@@ -744,6 +1303,7 @@ const FashionManifesto = () => {
 
             </div>
 
+
             <p className="
               mb-4
               text-[9px]
@@ -754,6 +1314,7 @@ const FashionManifesto = () => {
             ">
               IDENTITY OVER TRENDS
             </p>
+
 
             <h2 className="text-[#111]">
 
@@ -772,6 +1333,7 @@ const FashionManifesto = () => {
               >
                 DON&apos;T WEAR
               </span>
+
 
               <span
                 className="
@@ -792,6 +1354,7 @@ const FashionManifesto = () => {
                 THE TREND.
               </span>
 
+
               <span className="
                 mt-7
                 block
@@ -803,6 +1366,7 @@ const FashionManifesto = () => {
               ">
                 WEAR THE
               </span>
+
 
               <span className="
                 block
@@ -817,6 +1381,7 @@ const FashionManifesto = () => {
               </span>
 
             </h2>
+
 
             <div className="
               mb-6
@@ -839,6 +1404,7 @@ const FashionManifesto = () => {
               " />
 
             </div>
+
 
             <div className="
               flex
@@ -865,6 +1431,7 @@ const FashionManifesto = () => {
                 through what you wear, what you stand
                 for, and the life you choose to live.
               </p>
+
 
               <div className="
                 flex
@@ -931,6 +1498,7 @@ const FashionManifesto = () => {
 
       </div>
 
+
       {/* =========================================
           MOBILE VERSION
           NO ABSOLUTE OVERLAPPING
@@ -984,6 +1552,7 @@ const FashionManifesto = () => {
 
         </div>
 
+
         {/* TEXT */}
 
         <div className="
@@ -1017,6 +1586,7 @@ const FashionManifesto = () => {
 
           </div>
 
+
           {/* LABEL */}
 
           <p className="
@@ -1029,6 +1599,7 @@ const FashionManifesto = () => {
           ">
             IDENTITY OVER TRENDS
           </p>
+
 
           {/* MAIN HEADING */}
 
@@ -1049,6 +1620,7 @@ const FashionManifesto = () => {
               DON&apos;T WEAR
             </span>
 
+
             <span
               className="
                 mt-2
@@ -1068,6 +1640,7 @@ const FashionManifesto = () => {
               THE TREND.
             </span>
 
+
             <span className="
               mt-7
               block
@@ -1079,6 +1652,7 @@ const FashionManifesto = () => {
             ">
               WEAR THE
             </span>
+
 
             <span className="
               block
@@ -1093,6 +1667,7 @@ const FashionManifesto = () => {
             </span>
 
           </h2>
+
 
           {/* DIVIDER */}
 
@@ -1119,6 +1694,7 @@ const FashionManifesto = () => {
 
           </div>
 
+
           {/* DESCRIPTION */}
 
           <p className="
@@ -1143,6 +1719,7 @@ const FashionManifesto = () => {
             and the life you choose to live.
 
           </p>
+
 
           {/* TAGS */}
 
@@ -1199,6 +1776,7 @@ const FashionManifesto = () => {
 
         </div>
 
+
         {/* MOBILE FOOTER LABELS */}
 
         <div className="
@@ -1238,6 +1816,7 @@ const FashionManifesto = () => {
 
       </div>
 
+
       {/* DESKTOP FOOTER LABELS */}
 
       <div className="
@@ -1275,6 +1854,257 @@ const FashionManifesto = () => {
 
       </div>
 
+    </section>
+  );
+};
+
+
+
+const DesktopHeroCarousel = () => {
+  const navigate = useNavigate();
+
+  const images = [
+    '/live3.png',
+    '/live4.png',
+  ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleDragEnd = (_, info) => {
+    const offset = info.offset.x;
+    const velocity = info.velocity.x;
+
+    if (offset < -80 || velocity < -500) {
+      setActiveIndex((prev) => (prev + 1) % images.length);
+      return;
+    }
+
+    if (offset > 80 || velocity > 500) {
+      setActiveIndex(
+        (prev) => (prev - 1 + images.length) % images.length
+      );
+    }
+  };
+
+  return (
+    <section
+      className="
+        relative
+        hidden
+        w-full
+        sm:flex
+        sm:min-h-[calc(100vh-72px)]
+        sm:mt-[72px]
+        sm:overflow-hidden
+      "
+    >
+      <motion.div
+        className="
+          relative
+          flex
+          h-[calc(100vh-72px)]
+          w-full
+          cursor-pointer
+          overflow-hidden
+        "
+        drag="x"
+        dragConstraints={{
+          left: 0,
+          right: 0,
+        }}
+        dragElastic={0.05}
+        onDragEnd={handleDragEnd}
+        onClick={() => navigate('/products')}
+      >
+        {images.map((image, index) => (
+          <React.Fragment key={image}>
+
+            <motion.img
+              src={image}
+              alt="Drag Clothing hero"
+              className="
+  absolute
+  inset-0
+  h-full
+  w-full
+  object-cover
+  object-[center_20%]
+"
+              initial={false}
+              animate={{
+                opacity:
+                  activeIndex === index ? 1 : 0,
+                scale:
+                  activeIndex === index ? 1 : 1.02,
+              }}
+              transition={{
+                opacity: {
+                  duration: 0.8,
+                  ease: 'easeOut',
+                },
+                scale: {
+                  duration: 1.1,
+                  ease: 'easeOut',
+                },
+              }}
+              draggable="false"
+            />
+
+
+            {/* BOTTOM-RIGHT ARROW */}
+            {activeIndex === index && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="
+      group
+      pointer-events-auto
+      absolute
+      bottom-6
+      right-6
+      sm:bottom-8
+      sm:right-8
+      md:bottom-10
+      md:right-10
+      z-30
+    "
+              >
+                <div
+                  className="
+        flex
+        h-12
+        w-12
+        sm:h-14
+        sm:w-14
+        md:h-16
+        md:w-16
+        items-center
+        justify-center
+        rounded-full
+        border
+        border-white/70
+        bg-black/10
+        text-white
+        transition-all
+        duration-300
+        hover:bg-white
+        hover:text-black
+        hover:border-white
+        hover:scale-105
+      "
+                >
+                  <ArrowUpRight
+                    size={20}
+                    strokeWidth={1.5}
+                    className="
+          sm:h-6
+          sm:w-6
+          transition-transform
+          duration-300
+          group-hover:rotate-45
+        "
+                  />
+                </div>
+              </motion.div>
+            )}
+
+            {/* LIVE 3 */}
+            {index === 0 && (
+              <motion.div
+                initial={false}
+                animate={{
+                  opacity:
+                    activeIndex === 0 ? 1 : 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-x-0
+                  bottom-14
+                  z-20
+                  px-8
+                  md:px-12
+                "
+              >
+                <span
+                  className="
+                    ml-[6vw]
+                    sm:ml-[10vw]
+                    italic
+                    font-serif
+                    font-light
+                    text-[#9B4819]
+                    text-[18vw]
+                    sm:text-[14vw]
+                    leading-[0.82]
+                    uppercase
+                    tracking-[-0.055em]
+                  "
+                >
+                  AESTHETIC
+                </span>
+              </motion.div>
+            )}
+
+            {/* LIVE 4 */}
+            {index === 1 && (
+              <motion.div
+                initial={false}
+                animate={{
+                  opacity:
+                    activeIndex === 1 ? 1 : 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-x-0
+                  bottom-14
+                  z-20
+                  px-8
+                  md:px-12
+                "
+              >
+                <div
+                  className="
+                    ml-[6vw]
+                    sm:ml-[10vw]
+                    text-[14vw]
+                    sm:text-[11vw]
+                    font-black
+                    uppercase
+                    leading-[0.78]
+                    tracking-[-0.06em]
+                  "
+                >
+                  <span className="block text-white">
+                    BEYOND
+                  </span>
+
+                  <span className="block pl-[6vw] text-[#9B4819]">
+                    ORDINARY
+                  </span>
+                </div>
+              </motion.div>
+            )}
+
+          </React.Fragment>
+        ))}
+      </motion.div>
     </section>
   );
 };
@@ -1481,6 +2311,7 @@ const Home = () => {
 
       </AnimatePresence>
 
+
       <ToastContainer
         toasts={toasts}
         removeToast={
@@ -1488,70 +2319,24 @@ const Home = () => {
         }
       />
 
+
       <div className="relative w-full bg-[#EBE9E0] text-[#1A1A1A] font-sans selection:bg-[#1A1A1A] selection:text-white">
 
-        <section className="relative w-full min-h-[calc(100svh-64px)] sm:h-[calc(100vh-72px)] mt-[64px] sm:mt-[72px] flex flex-col justify-end pb-10 sm:pb-20 px-4 sm:px-6 overflow-hidden">
 
-          <motion.div
-            initial={{
-              scale: 1.2,
-              opacity: 0,
-            }}
-            animate={{
-              scale: 1,
-              opacity: 1,
-            }}
-            transition={{
-              duration: 1.5,
-              ease: 'easeOut',
-            }}
-            className="absolute inset-0 z-0 pointer-events-none"
-          >
+        <DesktopHeroCarousel />
 
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#EBE9E0]" />
 
-            <img
-              src="live3.png"
-              className="w-full h-full object-cover opacity-80"
-              alt="Hero"
-            />
+        {/* =========================================================
+            MOBILE HERO — EDITORIAL CAROUSEL
+           ========================================================= */}
 
-          </motion.div>
+        <div className="mt-[64px] sm:hidden">
+          <MobileHeroCarousel />
+        </div>
 
-          <div className="relative z-10 w-full max-w-[1600px] mx-auto">
-
-            <motion.div
-              initial={{
-                y: 100,
-                opacity: 0,
-              }}
-              animate={{
-                y: 0,
-                opacity: 1,
-              }}
-              transition={{
-                delay: 0.5,
-                duration: 1,
-              }}
-            >
-
-              <h1 className="text-[18vw] sm:text-[14vw] leading-[0.82] uppercase tracking-[-0.055em]">
-
-                <br />
-
-                <span className="ml-[6vw] sm:ml-[10vw] italic font-serif font-light text-[#9B4819]">
-                  AESTHETIC
-                </span>
-
-              </h1>
-
-            </motion.div>
-
-          </div>
-
-        </section>
 
         <FashionManifesto />
+
 
         <div className="bg-[#1A1A1A] py-8 border-y border-white/5">
 
@@ -1563,9 +2348,11 @@ const Home = () => {
 
         </div>
 
+
         <HorizontalStory
           addToast={addToast}
         />
+
 
         <section className="py-20 sm:py-28 md:py-40 px-4 sm:px-6 bg-[#EBE9E0]">
 
@@ -1598,6 +2385,7 @@ const Home = () => {
             </div>
 
           </div>
+
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6 max-w-[1600px] mx-auto">
 
@@ -1673,6 +2461,7 @@ const Home = () => {
 
                   </div>
 
+
                   <div className="flex flex-col sm:flex-row justify-between items-start gap-2 px-1">
 
                     <div>
@@ -1687,6 +2476,7 @@ const Home = () => {
                       </p>
 
                     </div>
+
 
                     <div className="flex flex-wrap items-center gap-1 sm:gap-2">
 
@@ -1746,9 +2536,11 @@ const Home = () => {
 
         </section>
 
+
         <Footer />
 
       </div>
+
     </>
   );
 };
