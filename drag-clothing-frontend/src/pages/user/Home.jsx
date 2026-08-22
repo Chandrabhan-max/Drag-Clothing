@@ -2183,9 +2183,6 @@ const Home = () => {
 
   };
 
-  useLayoutEffect(() => {
-  }, []);
-
   useEffect(() => {
 
     const fetchLatest =
@@ -2226,48 +2223,19 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    if (!isLoading) return;
 
-    if (isLoading) {
+    document.body.style.overflow = 'hidden';
 
-      document.body.style.overflow =
-        'hidden';
-
-      const exitTimer =
-        setTimeout(() => {
-
-          setIsLoading(false);
-
-          document.body.style.overflow =
-            '';
-
-          sessionStorage.setItem(
-            'hasLoadedBefore',
-            'true'
-          );
-
-        }, 3500);
-
-      return () => {
-
-        clearTimeout(
-          exitTimer
-        );
-
-        document.body.style.overflow =
-          '';
-
-      };
-
-    }
-
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isLoading]);
 
   return (
     <>
       <AnimatePresence>
-
         {isLoading && (
-
           <motion.div
             key="preloader"
             initial={{
@@ -2276,13 +2244,8 @@ const Home = () => {
             exit={{
               y: '-100%',
               transition: {
-                duration: 3,
-                ease: [
-                  0.76,
-                  0,
-                  0.24,
-                  1,
-                ],
+                duration: 0.9,
+                ease: [0.76, 0, 0.24, 1],
               },
             }}
             className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
@@ -2294,21 +2257,27 @@ const Home = () => {
               autoPlay
               muted
               playsInline
-              loop
+              preload="auto"
+              onEnded={() => {
+                setIsLoading(false);
+
+                document.body.style.overflow = '';
+
+                sessionStorage.setItem(
+                  'hasLoadedBefore',
+                  'true'
+                );
+              }}
               className="absolute inset-0 w-full h-full object-cover"
             >
-
               <source
                 src="/front.mp4"
                 type="video/mp4"
               />
-
             </video>
 
           </motion.div>
-
         )}
-
       </AnimatePresence>
 
 
