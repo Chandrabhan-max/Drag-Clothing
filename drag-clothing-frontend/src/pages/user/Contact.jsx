@@ -705,14 +705,13 @@ const Contact = () => {
             RIGHT — DIRECT LINES
            ================================================= */}
 
-        <motion.div
+       {/* <motion.div
           initial="hidden"
           animate="visible"
           variants={stagger}
           className="flex flex-col"
         >
 
-          {/* RIGHT HEADER */}
 
           <motion.div
             variants={fadeUp}
@@ -747,7 +746,6 @@ const Contact = () => {
           </motion.div>
 
 
-          {/* TEAM CARDS */}
 
           <div className="
             grid
@@ -778,9 +776,6 @@ const Contact = () => {
                   "
                 >
 
-                  {/* =======================================
-                      NAME + ROLE
-                     ======================================= */}
 
                   <div>
 
@@ -813,9 +808,6 @@ const Contact = () => {
                   </div>
 
 
-                  {/* =======================================
-                      CONTACT INFO
-                     ======================================= */}
 
                   <div className="
                     grid
@@ -824,7 +816,6 @@ const Contact = () => {
                     gap-2
                   ">
 
-                    {/* EMAIL */}
 
                     <a
                       href={`mailto:${member.email}`}
@@ -863,8 +854,6 @@ const Contact = () => {
 
                     </a>
 
-
-                    {/* PHONE */}
 
                     <a
                       href={`tel:${member.phone.replace(
@@ -908,9 +897,6 @@ const Contact = () => {
                   </div>
 
 
-                  {/* =======================================
-                      SOCIALS
-                     ======================================= */}
 
                   <div className="
                     flex
@@ -921,7 +907,6 @@ const Contact = () => {
                     border-[#1A1A1A]/5
                   ">
 
-                    {/* GITHUB */}
 
                     {member.socials.github && (
                       <a
@@ -953,7 +938,6 @@ const Contact = () => {
                     )}
 
 
-                    {/* LINKEDIN */}
 
                     {member.socials.linkedin && (
                       <a
@@ -986,7 +970,6 @@ const Contact = () => {
                     )}
 
 
-                    {/* INSTAGRAM */}
 
                     {member.socials.instagram && (
                       <a
@@ -1027,8 +1010,7 @@ const Contact = () => {
 
           </div>
 
-        </motion.div>
-
+        </motion.div>*/}
       </div>
 
     </div>
